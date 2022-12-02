@@ -3,7 +3,7 @@ appVersion: latest
 type: install
 id: xadrezsuico
 name: XadrezSuíço
-baseUrl: https://raw.githubusercontent.com/xadrezsuico/xadrezsuico-jelastic/develop
+baseUrl: https://raw.githubusercontent.com/xadrezsuico/xadrezsuico-jelastic/master
 logo: /images/logo-transparent.png
 homepage: http://xadrezsuico.github.io/
 
@@ -11,22 +11,21 @@ categories:
 - apps/dev-and-admin-tools
 
 description:
-  text: /jelastic-description.md
+  text: /texts/description.md
   short: Sistema de gerenciamento de circuitos de Xadrez
 
 globals:
   laravelroot: /var/www/webroot/ROOT
 
 nodes:
-- image: apache
-  tag: 2.4.46-php-7.4.10
+- image: jppcel/xadrezsuico
   fixedCloudlets: 4
   cloudlets: 16
   diskLimit: 50G
   displayName: Apache+PHP+XadrezSuíço
   docker:
   env:
-  - WEBROOT: /var/www/webroot/public
+  - WEBROOT: /var/www/html
 - nodeType: postgresql
   tag: 12.4
   fixedCloudlets: 3
@@ -43,10 +42,6 @@ onInstall:
 actions:
   config:
     cmd[cp]: |-
-      curl -sS https://getcomposer.org/installer | php
-      cp composer.phar /usr/local/bin/composer
-      chmod +x /usr/bin/composer
-      yum install gd gd-devel php-gd
       cd ${globals.laravelroot}
       rm -rf *
       git clone https://github.com/XadrezSuico/XadrezSuico.git ./
@@ -59,3 +54,5 @@ actions:
     user: root
 
 startPage: /
+
+success: /texts/success.md
