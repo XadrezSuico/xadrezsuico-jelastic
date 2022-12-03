@@ -1,0 +1,30 @@
+version: '1.4.2'
+appVersion: latest
+type: install
+id: xadrezsuico-fide-ratings-scraper
+name: fide-ratings-scraper
+baseUrl: https://raw.githubusercontent.com/xadrezsuico/xadrezsuico-jelastic/master/docker/fide-ratings-scraper
+
+categories:
+- apps/dev-and-admin-tools
+
+description:
+  short: Implementação do projeto xRuiAlves/fide-ratings-scraper em formato de API.
+
+nodes:
+- image: jppcel/fide-ratings-scraper
+  nodeGroup: cp
+  fixedCloudlets: 1
+  cloudlets: 1
+  diskLimit: 20G
+  displayName: FideRatingsScraper
+  scalingMode: STATEFUL
+  env:
+  - JELASTIC_EXPOSE: 80
+
+
+onInstall:
+  - restartNodes:
+    - nodeGroup: [cp]
+
+startPage: /

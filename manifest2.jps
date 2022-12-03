@@ -66,6 +66,9 @@ actions:
       chown -R www-data:www-data /var/www/html
       echo "0 2 * * * php /var/www/html/artisan rating:check_ratings" >> /var/spool/cron/crontabs/root
       echo "30 1 * * * php /var/www/html/artisan rating:check_moves" >> /var/spool/cron/crontabs/root
+      echo "30 2 * * * php /var/www/html/artisan fexpar:vinculos --vinculate " >> /var/spool/cron/crontabs/root
+      echo "0 3 * * * php /var/www/html/artisan fexpar:vinculos --pre-vinculate" >> /var/spool/cron/crontabs/root
+      
     user: root
 
 startPage: /
